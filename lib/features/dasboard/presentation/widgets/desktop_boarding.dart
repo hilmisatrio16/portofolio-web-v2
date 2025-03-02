@@ -1,12 +1,15 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:portofolio_web/features/dasboard/presentation/controllers/home_controller.dart';
 
 import '../../../../core/constants/constant_colors.dart';
 import '../../../../core/constants/iconify_assets.dart';
+
+import 'dart:js' as js;
 
 class DesktopBoarding extends StatelessWidget {
   const DesktopBoarding({
@@ -44,7 +47,7 @@ class DesktopBoarding extends StatelessWidget {
                         color: Colors.white,
                         fontWeight: FontWeight.w600,
                         fontSize: screenwidth >= 600 ? 36 : 28),
-                  ),
+                  ).animate().fade(duration: 1000.ms),
                   SizedBox(
                     height: 8,
                   ),
@@ -55,7 +58,7 @@ class DesktopBoarding extends StatelessWidget {
                         color: Colors.white,
                         fontWeight: FontWeight.w700,
                         fontSize: screenwidth >= 600 ? 42 : 34),
-                  ),
+                  ).animate().fadeIn(duration: 1000.ms, delay: 500.ms),
                   SizedBox(
                     height: 8,
                   ),
@@ -66,7 +69,7 @@ class DesktopBoarding extends StatelessWidget {
                         color: Colors.white,
                         fontWeight: FontWeight.w400,
                         fontSize: screenwidth >= 600 ? 36 : 28),
-                  ),
+                  ).animate().fade(duration: 1000.ms, delay: 1000.ms),
                 ],
               ),
             ),
@@ -74,7 +77,7 @@ class DesktopBoarding extends StatelessWidget {
               "assets/avatar_face.png",
               width: 400,
               height: 400,
-            )
+            ).animate().fade(duration: 1200.ms, delay: 800.ms)
           ],
         ),
       ),
@@ -86,54 +89,68 @@ class DesktopBoarding extends StatelessWidget {
             Obx(() => Visibility(
                 visible: controller.isHoveredContact.value,
                 child: Row(children: [
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.2),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: BackdropFilter(
-                        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                        child: Container(
-                            width: screenwidth >= 600
-                                ? 100
-                                : 64, // Ukuran wajib agar terlihat
-                            height: screenwidth >= 600 ? 64 : 54,
-                            alignment: Alignment.center,
-                            child: Iconify(
-                              iconLinkedin,
-                              size: 64,
-                              color: Colors.white,
-                            )),
+                  InkWell(
+                    onTap: () {
+                      js.context.callMethod(
+                          'open', ["https://www.linkedin.com/in/mhilmisatrio"]);
+                    },
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: BackdropFilter(
+                          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                          child: Container(
+                              width: screenwidth >= 600
+                                  ? 100
+                                  : 64, // Ukuran wajib agar terlihat
+                              height: screenwidth >= 600 ? 64 : 54,
+                              alignment: Alignment.center,
+                              child: Iconify(
+                                iconLinkedin,
+                                size: 64,
+                                color: Colors.white,
+                              )),
+                        ),
                       ),
                     ),
                   ),
                   SizedBox(
                     width: 32,
                   ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.2),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: BackdropFilter(
-                        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                        child: Container(
-                            width: screenwidth >= 600
-                                ? 100
-                                : 64, // Ukuran wajib agar terlihat
-                            height: screenwidth >= 600 ? 64 : 54,
-                            alignment: Alignment.center,
-                            child: Iconify(
-                              iconGithub,
-                              size: 64,
-                              color: Colors.white,
-                            )),
+                  InkWell(
+                    onTap: () {
+                      js.context.callMethod(
+                          'open', ["https://github.com/hilmisatrio16"]);
+                    },
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: BackdropFilter(
+                          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                          child: Container(
+                              width: screenwidth >= 600
+                                  ? 100
+                                  : 64, // Ukuran wajib agar terlihat
+                              height: screenwidth >= 600 ? 64 : 54,
+                              alignment: Alignment.center,
+                              child: Iconify(
+                                iconGithub,
+                                size: 64,
+                                color: Colors.white,
+                              )),
+                        ),
                       ),
                     ),
                   ),
@@ -160,7 +177,12 @@ class DesktopBoarding extends StatelessWidget {
                   color: Colors.white,
                   size: 38,
                 ),
-              ),
+              ).animate().slideX(
+                  begin: 1,
+                  end: 0,
+                  duration: 800.ms,
+                  curve: Curves.easeOut,
+                  delay: 1600.ms),
             ),
           ],
         ),
@@ -170,6 +192,9 @@ class DesktopBoarding extends StatelessWidget {
         bottom: 20,
         child: Image.asset("assets/dot_grid.png"),
       )
+          .animate()
+          .fade(duration: 1000.ms, delay: 1400.ms)
+          .slideX(begin: -1, end: 0, duration: 800.ms, curve: Curves.easeOut),
     ]);
   }
 }
