@@ -1,8 +1,14 @@
+import 'dart:typed_data';
+
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
+import 'package:portofolio_web/core/constants/constant_colors.dart';
 
 import '../../../../core/constants/iconify_assets.dart';
 import '../../../../core/constants/nav_items.dart';
+import 'dart:html' as html;
 
 class DesktopNavigation extends StatelessWidget {
   const DesktopNavigation({
@@ -31,7 +37,28 @@ class DesktopNavigation extends StatelessWidget {
         Spacer(),
         //Whatsapp Button
         InkWell(
-          onTap: () {},
+          onTap: () {
+            AwesomeDialog(
+              width: MediaQuery.of(context).size.width / 3,
+              dialogBackgroundColor: blackMetal,
+              context: context,
+              animType: AnimType.scale,
+              dialogType: DialogType.info,
+              body: Container(
+                padding: EdgeInsets.symmetric(vertical: 46, horizontal: 36),
+                child: Text(
+                  'Whatsapp under progress',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontFamily: "MontserratAlternates",
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
+                      fontSize: 28),
+                ),
+              ),
+              btnOkOnPress: () {},
+            ).show();
+          },
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
@@ -66,7 +93,38 @@ class DesktopNavigation extends StatelessWidget {
         ),
         //Hire Me
         InkWell(
-          onTap: () {},
+          onTap: () {
+            AwesomeDialog(
+              width: MediaQuery.of(context).size.width / 3,
+              dialogBackgroundColor: blackMetal,
+              context: context,
+              animType: AnimType.scale,
+              dialogType: DialogType.noHeader,
+              body: Container(
+                padding: EdgeInsets.symmetric(vertical: 46, horizontal: 36),
+                child: Text(
+                  'Are you still downloading this file?',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontFamily: "MontserratAlternates",
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
+                      fontSize: 28),
+                ),
+              ),
+              title: 'Download Comfirmation',
+              desc: 'Are you still downloading this file?',
+              buttonsTextStyle: TextStyle(
+                  fontSize: 24,
+                  fontFamily: "MontserratAlternates",
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white),
+              btnCancelOnPress: () {},
+              btnOkOnPress: () {
+                downloadPdf();
+              },
+            ).show();
+          },
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
@@ -98,5 +156,23 @@ class DesktopNavigation extends StatelessWidget {
         )
       ],
     );
+  }
+
+  void downloadPdf() async {
+    // 1️ Baca file dari assets
+    ByteData bytes = await rootBundle.load("assets/my_cv.pdf");
+    Uint8List pdfBytes = bytes.buffer.asUint8List();
+
+    // 2️ Buat Blob dari file PDF
+    final blob = html.Blob([pdfBytes], 'application/pdf');
+    final url = html.Url.createObjectUrlFromBlob(blob);
+
+    // 3️ Buat link download dan klik otomatis
+    html.AnchorElement anchor = html.AnchorElement(href: url)
+      ..setAttribute("download", "my_cv.pdf") // Nama file saat didownload
+      ..click();
+
+    // 4️ Hapus URL Blob setelah digunakan untuk menghemat memori
+    html.Url.revokeObjectUrl(url);
   }
 }

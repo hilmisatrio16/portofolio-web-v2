@@ -154,7 +154,12 @@ class DesktopBoarding extends StatelessWidget {
                       ),
                     ),
                   ),
-                ]))),
+                ]).animate().slideX(
+                      begin: controller.isHoveredContact.value ? 1 : 0,
+                      end: controller.isHoveredContact.value ? 0 : 1,
+                      duration: 600.ms,
+                      curve: Curves.easeOut,
+                    ))),
             SizedBox(
               width: 32,
             ),
