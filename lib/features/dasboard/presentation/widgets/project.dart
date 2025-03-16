@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:portofolio_web/core/constants/constant_values.dart';
 import 'package:portofolio_web/features/dasboard/presentation/widgets/card_projects.dart';
 
 import '../../../../core/constants/constant_colors.dart';
@@ -6,8 +7,10 @@ import '../../../../core/constants/constant_colors.dart';
 class Project extends StatelessWidget {
   const Project({
     super.key,
+    required this.navbarKeys,
   });
 
+  final List<GlobalKey<State<StatefulWidget>>> navbarKeys;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -16,6 +19,7 @@ class Project extends StatelessWidget {
           Align(
             alignment: Alignment.centerRight,
             child: Container(
+              key: navbarKeys.first,
               padding: EdgeInsets.symmetric(horizontal: 54, vertical: 8),
               decoration: BoxDecoration(
                   color: greenPrimary,
@@ -38,7 +42,10 @@ class Project extends StatelessWidget {
             runSpacing: 32,
             alignment: WrapAlignment.center,
             children: [
-              for (int i = 0; i < 3; i++) CardProjects(),
+              for (int i = 0; i < projects.length; i++)
+                CardProjects(
+                  project: projects[i],
+                ),
             ],
           ),
           SizedBox(

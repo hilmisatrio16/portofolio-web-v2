@@ -13,7 +13,10 @@ import 'dart:html' as html;
 class DesktopNavigation extends StatelessWidget {
   const DesktopNavigation({
     super.key,
+    required this.scrollToSection,
   });
+
+  final void Function(int) scrollToSection;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +26,9 @@ class DesktopNavigation extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             child: TextButton(
-              onPressed: () {},
+              onPressed: () {
+                scrollToSection(i);
+              },
               child: Text(
                 headerNav[i],
                 style: TextStyle(

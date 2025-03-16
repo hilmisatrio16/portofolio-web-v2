@@ -1,4 +1,10 @@
-final List<String> headerNav = ["Projects", "Skills", "Articles", "Who I am"];
+final List<String> headerNav = [
+  "Projects",
+  "Skills",
+  "Experiences",
+  "Contact Me",
+  "Who I am"
+];
 final String contactWA = "Contact whatsapp";
 final String hire = "Hire";
 final String me = " Me";

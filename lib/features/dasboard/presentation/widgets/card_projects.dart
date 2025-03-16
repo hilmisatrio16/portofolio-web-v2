@@ -6,12 +6,15 @@ import 'package:iconify_flutter/iconify_flutter.dart';
 import '../../../../core/constants/constant_colors.dart';
 import '../../../../core/constants/iconify_assets.dart';
 import '../../../../core/constants/nav_items.dart';
+import '../../domain/entities/project.dart';
 
 class CardProjects extends StatelessWidget {
   const CardProjects({
     super.key,
+    required this.project,
   });
 
+  final Project project;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,7 +35,7 @@ class CardProjects extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8),
                     child: Image.asset(
-                      "assets/android_images.png",
+                      project.image,
                       width: 340,
                       height: 320,
                       fit: BoxFit.fill,
@@ -43,7 +46,7 @@ class CardProjects extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                   child: Column(
                     children: [
-                      Text("Android Development System MVVM",
+                      Text(project.nameApp,
                           style: TextStyle(
                               fontSize: 18,
                               fontFamily: "Montserrat",
@@ -53,8 +56,8 @@ class CardProjects extends StatelessWidget {
                         height: 12,
                       ),
                       Text(
-                        dummyText,
-                        maxLines: 5,
+                        project.describe,
+                        maxLines: 7,
                         style: TextStyle(
                             fontSize: 14,
                             fontFamily: "Montserrat",

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:portofolio_web/core/constants/constant_values.dart';
 
 import '../../../../core/constants/constant_colors.dart';
 import '../../../../core/constants/nav_items.dart';
@@ -7,13 +8,16 @@ class MobileProfile extends StatelessWidget {
   const MobileProfile({
     super.key,
     required this.screenwidth,
+    required this.navbarKeys,
   });
 
   final double screenwidth;
+  final List<GlobalKey<State<StatefulWidget>>> navbarKeys;
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      key: navbarKeys[4],
       width: screenwidth,
       margin: EdgeInsets.fromLTRB(26, 100, 26, 0),
       decoration: BoxDecoration(
@@ -44,7 +48,7 @@ class MobileProfile extends StatelessWidget {
           Container(
             padding: EdgeInsets.symmetric(horizontal: 36, vertical: 26),
             child: Text(
-              dummyText + dummyText,
+              aboutMe,
               style: TextStyle(
                   fontSize: 18,
                   fontFamily: "Montserrat",

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:portofolio_web/core/constants/constant_values.dart';
 
 import '../../../../core/constants/constant_colors.dart';
 import '../../../../core/constants/nav_items.dart';
@@ -7,13 +8,16 @@ class DesktopProfile extends StatelessWidget {
   const DesktopProfile({
     super.key,
     required this.screenwidth,
+    required this.navbarKeys,
   });
 
   final double screenwidth;
+  final List<GlobalKey<State<StatefulWidget>>> navbarKeys;
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      key: navbarKeys[4],
       width: screenwidth,
       margin: EdgeInsets.fromLTRB(screenwidth / 6, 100, 0, 0),
       decoration: BoxDecoration(
@@ -46,7 +50,7 @@ class DesktopProfile extends StatelessWidget {
           Container(
             padding: EdgeInsets.symmetric(horizontal: 36, vertical: 26),
             child: Text(
-              dummyText + dummyText,
+              aboutMe,
               style: TextStyle(
                   fontSize: 20,
                   fontFamily: "Montserrat",

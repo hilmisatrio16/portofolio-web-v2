@@ -1,22 +1,32 @@
 import 'dart:ui';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/constants/constant_colors.dart';
 import '../../../../core/constants/constant_values.dart';
 import '../../../../core/constants/iconify_assets.dart';
 
+import 'package:mailto/mailto.dart';
+
 class DesktopBoxAndCertificate extends StatelessWidget {
   const DesktopBoxAndCertificate({
     super.key,
     required this.screenwidth,
+    required this.navbarKeys,
   });
 
   final double screenwidth;
+  final List<GlobalKey<State<StatefulWidget>>> navbarKeys;
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController emailController = TextEditingController();
+    final TextEditingController subjectController = TextEditingController();
+    final TextEditingController contentController = TextEditingController();
     return Wrap(children: [
       //box message
       Container(
@@ -46,7 +56,7 @@ class DesktopBoxAndCertificate extends StatelessWidget {
                       ),
                       color: greenPrimary),
                   child: Text(
-                    "Show more",
+                    "Contact Me",
                     style: TextStyle(
                         color: Colors.white,
                         fontFamily: "MontserratAlternates",
@@ -60,6 +70,7 @@ class DesktopBoxAndCertificate extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 42),
                   child: TextField(
+                    controller: emailController,
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.white,
@@ -93,6 +104,7 @@ class DesktopBoxAndCertificate extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 42),
                   child: TextField(
+                    controller: subjectController,
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.white,
@@ -127,6 +139,7 @@ class DesktopBoxAndCertificate extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 42),
                   child: TextField(
                     maxLines: 7,
+                    controller: contentController,
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.white,
@@ -158,7 +171,43 @@ class DesktopBoxAndCertificate extends StatelessWidget {
                   height: 80,
                 ),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    if (emailController.text.isNotEmpty &&
+                        subjectController.text.isNotEmpty &&
+                        contentController.text.isNotEmpty) {
+                      launchMailto(emailController.text, subjectController.text,
+                          subjectController.text);
+                    } else {
+                      AwesomeDialog(
+                        width: MediaQuery.of(context).size.width / 3,
+                        dialogBackgroundColor: blackMetal,
+                        context: context,
+                        animType: AnimType.scale,
+                        dialogType: DialogType.noHeader,
+                        body: Container(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 46, horizontal: 36),
+                          child: Text(
+                            'Please fill in all fields before send!',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontFamily: "MontserratAlternates",
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white,
+                                fontSize: 28),
+                          ),
+                        ),
+                        title: 'Warning to fill form',
+                        desc: 'Please fill in all fields before send!',
+                        buttonsTextStyle: TextStyle(
+                            fontSize: 24,
+                            fontFamily: "MontserratAlternates",
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white),
+                        btnOkOnPress: () {},
+                      ).show();
+                    }
+                  },
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 36, vertical: 8),
                     decoration: BoxDecoration(
@@ -228,66 +277,21 @@ class DesktopBoxAndCertificate extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 spacing: 32,
                 children: [
-                  Column(children: [
-                    for (int i = 0; i < 2; i++)
-                      Container(
-                        margin: EdgeInsets.symmetric(vertical: 16),
-                        width: 468,
-                        decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.2),
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: Colors.white, width: 1),
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: BackdropFilter(
-                              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                              child: Column(
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.all(10),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(8),
-                                      child: Image.asset(
-                                        "assets/android_images.png",
-                                        width: 460,
-                                        height: 280,
-                                        fit: BoxFit.fill,
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    alignment: Alignment.centerLeft,
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 16, vertical: 16),
-                                    child: Column(
-                                      children: [
-                                        Text("Android Experts",
-                                            style: TextStyle(
-                                                fontSize: 24,
-                                                fontFamily: "Montserrat",
-                                                fontWeight: FontWeight.w600,
-                                                color: Colors.white)),
-                                        SizedBox(
-                                          height: 12,
-                                        ),
-                                        Text(
-                                          "Dicoding Academy",
-                                          maxLines: 5,
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              fontFamily: "Montserrat",
-                                              fontWeight: FontWeight.w300,
-                                              color: Colors.white),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              )),
-                        ),
-                      ),
-                  ]),
+                  Flexible(
+                      child: CarouselSlider(
+                    options: CarouselOptions(
+                      aspectRatio: 1.6,
+                      enlargeCenterPage: true,
+                      scrollDirection: Axis.vertical,
+                      autoPlay: true,
+                      height: 740,
+                      viewportFraction: 0.5,
+                    ),
+                    items: certificates,
+                  )),
+                  // Column(children: [
+                  //   for (int i = 0; i < 2; i++) CardCertificate(),
+                  // ]),
                   Column(
                     children: [
                       Iconify(
@@ -326,5 +330,19 @@ class DesktopBoxAndCertificate extends StatelessWidget {
         ),
       )
     ]);
+  }
+
+  launchMailto(String email, String subject, String content) async {
+    try {
+      final mailtoLink = Mailto(
+        to: ['muhhilmisatrio@gmail.com'],
+        subject: subject,
+        body: content,
+      );
+      // ignore: deprecated_member_use
+      await launch('$mailtoLink');
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 }

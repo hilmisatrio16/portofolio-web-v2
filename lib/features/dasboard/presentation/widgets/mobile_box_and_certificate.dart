@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 
@@ -11,9 +12,11 @@ class MobileBoxAndCertificate extends StatelessWidget {
   const MobileBoxAndCertificate({
     super.key,
     required this.screenwidth,
+    required this.navbarKeys,
   });
 
   final double screenwidth;
+  final List<GlobalKey<State<StatefulWidget>>> navbarKeys;
 
   @override
   Widget build(BuildContext context) {
@@ -42,64 +45,18 @@ class MobileBoxAndCertificate extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 spacing: 32,
                 children: [
-                  Column(children: [
-                    for (int i = 0; i < 2; i++)
-                      Container(
-                        margin: EdgeInsets.symmetric(vertical: 16),
-                        decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.2),
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: Colors.white, width: 1),
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: BackdropFilter(
-                              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                              child: Column(
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.all(10),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(8),
-                                      child: Image.asset(
-                                        "assets/android_images.png",
-                                        width: 260,
-                                        height: 160,
-                                        fit: BoxFit.fill,
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    alignment: Alignment.centerLeft,
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 16, vertical: 16),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Text("Android Experts",
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                fontFamily: "Montserrat",
-                                                fontWeight: FontWeight.w600,
-                                                color: Colors.white)),
-                                        Text(
-                                          "Dicoding Academy",
-                                          maxLines: 5,
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              fontFamily: "Montserrat",
-                                              fontWeight: FontWeight.w300,
-                                              color: Colors.white),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              )),
-                        ),
-                      ),
-                  ]),
+                  Flexible(
+                      child: CarouselSlider(
+                    options: CarouselOptions(
+                      aspectRatio: 1.6,
+                      enlargeCenterPage: true,
+                      scrollDirection: Axis.vertical,
+                      autoPlay: true,
+                      height: 460,
+                      viewportFraction: 0.5,
+                    ),
+                    items: certificates,
+                  )),
                   Column(
                     children: [
                       Iconify(

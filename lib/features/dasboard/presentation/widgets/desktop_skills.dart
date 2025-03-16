@@ -7,13 +7,16 @@ class DesktopSkills extends StatelessWidget {
   const DesktopSkills({
     super.key,
     required this.screenwidth,
+    required this.navbarKeys,
   });
 
   final double screenwidth;
+  final List<GlobalKey<State<StatefulWidget>>> navbarKeys;
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      key: navbarKeys[1],
       width: screenwidth,
       margin: EdgeInsets.fromLTRB(0, 100, screenwidth / 6, 0),
       decoration: BoxDecoration(
