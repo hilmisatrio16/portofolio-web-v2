@@ -8,6 +8,7 @@ import 'package:portofolio_web/core/constants/constant_colors.dart';
 
 import '../../../../core/constants/iconify_assets.dart';
 import '../../../../core/constants/nav_items.dart';
+import 'package:quickalert/quickalert.dart';
 import 'dart:html' as html;
 
 class DesktopNavigation extends StatelessWidget {
@@ -35,7 +36,7 @@ class DesktopNavigation extends StatelessWidget {
                     fontFamily: "MontserratAlternates",
                     color: Colors.white,
                     fontWeight: FontWeight.w400,
-                    fontSize: 24),
+                    fontSize: 20),
               ),
             ),
           ),
@@ -43,26 +44,17 @@ class DesktopNavigation extends StatelessWidget {
         //Whatsapp Button
         InkWell(
           onTap: () {
-            AwesomeDialog(
-              width: MediaQuery.of(context).size.width / 3,
-              dialogBackgroundColor: blackMetal,
-              context: context,
-              animType: AnimType.scale,
-              dialogType: DialogType.info,
-              body: Container(
-                padding: EdgeInsets.symmetric(vertical: 46, horizontal: 36),
-                child: Text(
-                  'Whatsapp under progress',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontFamily: "MontserratAlternates",
-                      fontWeight: FontWeight.w500,
-                      color: Colors.white,
-                      fontSize: 28),
+            QuickAlert.show(
+                context: context,
+                type: QuickAlertType.info,
+                text: 'Whatsapp under progress',
+                animType: QuickAlertAnimType.scale,
+                confirmBtnTextStyle: const TextStyle(
+                  fontFamily: "MontserratAlternates",
+                  fontWeight: FontWeight.bold,
                 ),
-              ),
-              btnOkOnPress: () {},
-            ).show();
+                //ukuran alert disesuaikan sehingga responsive di mobile maupun dekstop
+                width: 400);
           },
           child: Container(
             decoration: BoxDecoration(
@@ -99,36 +91,39 @@ class DesktopNavigation extends StatelessWidget {
         //Hire Me
         InkWell(
           onTap: () {
-            AwesomeDialog(
-              width: MediaQuery.of(context).size.width / 3,
-              dialogBackgroundColor: blackMetal,
-              context: context,
-              animType: AnimType.scale,
-              dialogType: DialogType.noHeader,
-              body: Container(
-                padding: EdgeInsets.symmetric(vertical: 46, horizontal: 36),
-                child: Text(
-                  'Are you still downloading this file?',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontFamily: "MontserratAlternates",
-                      fontWeight: FontWeight.w500,
-                      color: Colors.white,
-                      fontSize: 28),
-                ),
-              ),
-              title: 'Download Comfirmation',
-              desc: 'Are you still downloading this file?',
-              buttonsTextStyle: TextStyle(
-                  fontSize: 24,
-                  fontFamily: "MontserratAlternates",
-                  fontWeight: FontWeight.w500,
-                  color: Colors.white),
-              btnCancelOnPress: () {},
-              btnOkOnPress: () {
-                downloadPdf();
+            QuickAlert.show(
+              onCancelBtnTap: () {
+                Navigator.pop(context);
               },
-            ).show();
+              onConfirmBtnTap: () {
+                downloadPdf();
+                Navigator.pop(context);
+              },
+              context: context,
+              type: QuickAlertType.confirm,
+              text: 'Are you still downloading this file?',
+              titleAlignment: TextAlign.center,
+              textAlignment: TextAlign.center,
+              confirmBtnText: 'Yes',
+              cancelBtnText: 'No',
+              confirmBtnColor: Colors.white,
+              backgroundColor: Colors.black,
+              // headerBackgroundColor: Colors.grey,
+              confirmBtnTextStyle: const TextStyle(
+                color: Colors.black,
+                fontFamily: "MontserratAlternates",
+                fontWeight: FontWeight.bold,
+              ),
+              cancelBtnTextStyle: const TextStyle(
+                color: Colors.white,
+                fontFamily: "MontserratAlternates",
+                fontWeight: FontWeight.bold,
+              ),
+              // barrierColor: Colors.white,
+              titleColor: Colors.white,
+              textColor: Colors.white,
+              width: 400,
+            );
           },
           child: Container(
             decoration: BoxDecoration(

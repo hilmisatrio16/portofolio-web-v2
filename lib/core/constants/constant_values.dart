@@ -100,4 +100,20 @@ final List<Experience> experiences = [
         "Able to perform application testing with unit testing using Mockito and UI testing using Espresso.",
         "Collaborated with Full Stack Developer teams to create the FlyId App (Booking Flight App)."
       ]),
+  Experience(
+      role: "Android Developer",
+      name: "YARSI Artificial Intelligence Center",
+      date: "February 2024 – July 2024",
+      jobs: [
+        "Understand the SDLC (Software Development Life Cycle) concept in application development.",
+        "Understand the basic programming and logic in Kotlin programming language and be able to implement data structure, control flow, class, object, and function.",
+        "Implementation of the OOP (Object Oriented Programming) paradigm and SOLID principles to develop applications that are structured and easy to maintain.",
+        "Able to design UI (User Interface) using Activity and fragments to create responsive and interactive applications.",
+        "Build Android Application using some Android Jetpack components (ViewModel, ViewBinding, DataBinding, LiveData, Navigation Component, etc.).",
+        "Integrating the Android app with the server to retrieve and display data using Retrofit and Okhttp for http requests while managing local data storage with ROOM.",
+        "Running background processes using coroutines for running tasks asynchronously.",
+        "Implement clean code architecture, MVVM design pattern, and dependency injection using the Hilt Digger component to reduce application dependency.",
+        "Able to perform application testing with unit testing using Mockito and UI testing using Espresso.",
+        "Collaborated with Full Stack Developer teams to create the FlyId App (Booking Flight App)."
+      ]),
 ];

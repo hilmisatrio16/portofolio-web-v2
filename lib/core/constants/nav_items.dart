@@ -5,6 +5,15 @@ final List<String> headerNav = [
   "Contact Me",
   "Who I am"
 ];
+
+final List<String> headerNavMobile = [
+  "Projects",
+  "Skills",
+  "Experiences",
+  "Contact Me",
+  "Who I am",
+  "Hire Me"
+];
 final String contactWA = "Contact whatsapp";
 final String hire = "Hire";
 final String me = " Me";

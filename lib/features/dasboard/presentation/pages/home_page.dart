@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:portofolio_web/core/constants/constant_colors.dart';
 import 'package:portofolio_web/core/constants/iconify_assets.dart';
+import 'package:portofolio_web/core/constants/nav_items.dart';
 import 'package:portofolio_web/features/dasboard/presentation/controllers/home_controller.dart';
 import 'package:portofolio_web/features/dasboard/presentation/widgets/mobile_article.dart';
 import 'package:portofolio_web/features/dasboard/presentation/widgets/mobile_box_and_certificate.dart';
@@ -14,6 +15,7 @@ import 'package:portofolio_web/features/dasboard/presentation/widgets/mobile_run
 import 'package:portofolio_web/features/dasboard/presentation/widgets/mobile_skills.dart';
 
 import '../../../../core/constants/constant_values.dart';
+import '../widgets/boarding.dart';
 import '../widgets/desktop_boarding.dart';
 import '../widgets/desktop_box_and_certificate.dart';
 import '../widgets/dekstop_running_text.dart';
@@ -60,12 +62,14 @@ class _HomePageState extends State<HomePage> {
                   ? DesktopNavigation(
                       scrollToSection: scrollToSection,
                     )
-                  : MobileNavigation(),
+                  : MobileNavigation(controller: controller),
             ),
             //Wrap (welcome and profile photo)
-            DesktopBoarding(
+            //Boarding
+            Boarding(
               screenwidth: screenwidth,
               controller: controller,
+              scrollToSection: scrollToSection,
             ),
             SizedBox(
               height: 20,
@@ -232,8 +236,6 @@ class _HomePageState extends State<HomePage> {
 
   void scrollToSection(int navIndex) {
     if (navIndex == 5) {
-      // open a blog page
-      // js.context.callMethod('open', [SnsLinks.blog]);
       return;
     }
 

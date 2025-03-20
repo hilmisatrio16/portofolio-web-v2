@@ -32,7 +32,7 @@ class DekstopRunningText extends StatelessWidget {
                   color: Colors.white,
                   fontWeight: FontWeight.w600,
                   fontFamily: "MontserratAlternates",
-                  fontSize: 28),
+                  fontSize: 22),
             ),
           ),
           SizedBox(

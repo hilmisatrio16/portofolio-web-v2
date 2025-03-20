@@ -50,7 +50,7 @@ class MobileCardExperience extends StatelessWidget {
                 Container(
                   width: double.infinity,
                   alignment: Alignment.centerLeft,
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(10),

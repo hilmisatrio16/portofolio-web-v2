@@ -35,6 +35,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_animate: ^4.5.2
+  flutter_svg: ^2.0.17
   get: ^4.7.2
   iconify_flutter: ^0.0.7
   mailto: ^2.0.0

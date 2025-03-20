@@ -9,6 +9,7 @@ import 'package:portofolio_web/features/dasboard/presentation/controllers/home_c
 import '../../../../core/constants/constant_colors.dart';
 import '../../../../core/constants/iconify_assets.dart';
 
+// ignore: avoid_web_libraries_in_flutter
 import 'dart:js' as js;
 
 class DesktopBoarding extends StatelessWidget {
@@ -28,7 +29,7 @@ class DesktopBoarding extends StatelessWidget {
         width: screenwidth,
         alignment: Alignment.center,
         padding: EdgeInsets.symmetric(
-          vertical: 120,
+          vertical: screenwidth >= 600 ? 120 : 60,
         ),
         child: Wrap(
           runAlignment: WrapAlignment.spaceAround,
@@ -46,7 +47,7 @@ class DesktopBoarding extends StatelessWidget {
                         fontFamily: "MontserratAlternates",
                         color: Colors.white,
                         fontWeight: FontWeight.w600,
-                        fontSize: screenwidth >= 600 ? 36 : 28),
+                        fontSize: screenwidth >= 600 ? 36 : 24),
                   ).animate().fade(duration: 1000.ms),
                   SizedBox(
                     height: 8,
@@ -57,7 +58,7 @@ class DesktopBoarding extends StatelessWidget {
                         fontFamily: "MontserratAlternates",
                         color: Colors.white,
                         fontWeight: FontWeight.w700,
-                        fontSize: screenwidth >= 600 ? 42 : 34),
+                        fontSize: screenwidth >= 600 ? 42 : 28),
                   ).animate().fadeIn(duration: 1000.ms, delay: 500.ms),
                   SizedBox(
                     height: 8,
@@ -68,15 +69,15 @@ class DesktopBoarding extends StatelessWidget {
                         fontFamily: "MontserratAlternates",
                         color: Colors.white,
                         fontWeight: FontWeight.w400,
-                        fontSize: screenwidth >= 600 ? 36 : 28),
+                        fontSize: screenwidth >= 600 ? 36 : 24),
                   ).animate().fade(duration: 1000.ms, delay: 1000.ms),
                 ],
               ),
             ),
             Image.asset(
               "assets/avatar_face.png",
-              width: 400,
-              height: 400,
+              width: 360,
+              height: 360,
             ).animate().fade(duration: 1200.ms, delay: 800.ms)
           ],
         ),
