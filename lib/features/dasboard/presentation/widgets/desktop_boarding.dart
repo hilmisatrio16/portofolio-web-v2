@@ -76,7 +76,7 @@ class DesktopBoarding extends StatelessWidget {
             ),
             Stack(
               children: [
-                Image.asset("assets/profile.png",
+                Image.asset("assets/profile_image.webp",
                         width: screenwidth >= 600 ? 460 : 400,
                         height: screenwidth >= 600 ? 460 : 400,
                         fit: BoxFit.cover,
