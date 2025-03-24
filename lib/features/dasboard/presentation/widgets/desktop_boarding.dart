@@ -29,7 +29,7 @@ class DesktopBoarding extends StatelessWidget {
         width: screenwidth,
         alignment: Alignment.center,
         padding: EdgeInsets.symmetric(
-          vertical: screenwidth >= 600 ? 120 : 60,
+          vertical: screenwidth >= 600 ? 90 : 60,
         ),
         child: Wrap(
           runAlignment: WrapAlignment.spaceAround,
@@ -74,11 +74,23 @@ class DesktopBoarding extends StatelessWidget {
                 ],
               ),
             ),
-            Image.asset(
-              "assets/avatar_face.png",
-              width: 360,
-              height: 360,
-            ).animate().fade(duration: 1200.ms, delay: 800.ms)
+            Stack(
+              children: [
+                Image.asset("assets/profile.png",
+                        width: screenwidth >= 600 ? 460 : 400,
+                        height: screenwidth >= 600 ? 460 : 400,
+                        fit: BoxFit.cover,
+                        alignment: Alignment.topCenter)
+                    .animate()
+                    .fade(duration: 1200.ms, delay: 800.ms),
+                Container(
+                  width: screenwidth >= 600 ? 460 : 400,
+                  height: screenwidth >= 600 ? 460 : 400,
+                  color: blackPrimary
+                      .withOpacity(0.3), // Warna dengan transparansi
+                ),
+              ],
+            )
           ],
         ),
       ),

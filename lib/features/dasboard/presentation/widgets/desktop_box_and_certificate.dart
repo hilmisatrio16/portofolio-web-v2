@@ -2,8 +2,12 @@ import 'dart:ui';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:emailjs/emailjs.dart' as emailjs;
 import 'package:flutter/material.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
+import 'package:quickalert/models/quickalert_animtype.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/constants/constant_colors.dart';
@@ -25,7 +29,7 @@ class DesktopBoxAndCertificate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TextEditingController emailController = TextEditingController();
-    final TextEditingController subjectController = TextEditingController();
+    final TextEditingController nameController = TextEditingController();
     final TextEditingController contentController = TextEditingController();
     return Wrap(children: [
       //box message
@@ -70,6 +74,8 @@ class DesktopBoxAndCertificate extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 42),
                   child: TextField(
+                    style: TextStyle(
+                        fontFamily: "MontserratAlternates", fontSize: 16),
                     controller: emailController,
                     decoration: InputDecoration(
                       filled: true,
@@ -104,7 +110,9 @@ class DesktopBoxAndCertificate extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 42),
                   child: TextField(
-                    controller: subjectController,
+                    style: TextStyle(
+                        fontFamily: "MontserratAlternates", fontSize: 16),
+                    controller: nameController,
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.white,
@@ -124,7 +132,7 @@ class DesktopBoxAndCertificate extends StatelessWidget {
                             const BorderSide(color: Colors.white, width: 2.0),
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      hintText: 'type your subject...',
+                      hintText: 'type your name...',
                       hintStyle: const TextStyle(
                         color: Colors.grey,
                         fontFamily: "MontserratAlternates",
@@ -138,6 +146,8 @@ class DesktopBoxAndCertificate extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 42),
                   child: TextField(
+                    style: TextStyle(
+                        fontFamily: "MontserratAlternates", fontSize: 16),
                     maxLines: 7,
                     controller: contentController,
                     decoration: InputDecoration(
@@ -171,41 +181,68 @@ class DesktopBoxAndCertificate extends StatelessWidget {
                   height: 80,
                 ),
                 InkWell(
-                  onTap: () {
+                  onTap: () async {
                     if (emailController.text.isNotEmpty &&
-                        subjectController.text.isNotEmpty &&
+                        nameController.text.isNotEmpty &&
                         contentController.text.isNotEmpty) {
-                      launchMailto(emailController.text, subjectController.text,
-                          subjectController.text);
-                    } else {
-                      AwesomeDialog(
-                        width: MediaQuery.of(context).size.width / 3,
-                        dialogBackgroundColor: blackMetal,
-                        context: context,
-                        animType: AnimType.scale,
-                        dialogType: DialogType.noHeader,
-                        body: Container(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 46, horizontal: 36),
-                          child: Text(
-                            'Please fill in all fields before send!',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontFamily: "MontserratAlternates",
-                                fontWeight: FontWeight.w500,
-                                color: Colors.white,
-                                fontSize: 28),
+                      Map<String, dynamic> templateParams = {
+                        'name': nameController.text,
+                        'message': contentController.text,
+                        'email': emailController.text
+                      };
+                      var response;
+                      try {
+                        response = await emailjs.send(
+                          'service_qkt7zrk',
+                          'template_bmhoq7m',
+                          templateParams,
+                          const emailjs.Options(
+                            publicKey: 'ozSFQqRcTJXLTL24j',
+                            privateKey: 'RIuaKPJ2Emesi82ikPbE7',
                           ),
-                        ),
-                        title: 'Warning to fill form',
-                        desc: 'Please fill in all fields before send!',
-                        buttonsTextStyle: TextStyle(
-                            fontSize: 24,
+                        );
+
+                        QuickAlert.show(
+                            // ignore: use_build_context_synchronously
+                            context: context,
+                            type: QuickAlertType.success,
+                            text: 'Success to send the message.',
+                            animType: QuickAlertAnimType.scale,
+                            confirmBtnTextStyle: const TextStyle(
+                              fontFamily: "MontserratAlternates",
+                              fontWeight: FontWeight.bold,
+                            ),
+                            //ukuran alert disesuaikan sehingga responsive di mobile maupun dekstop
+                            width: 400);
+                        emailController.text = '';
+                        nameController.text = '';
+                        contentController.text = '';
+                      } catch (error) {
+                        QuickAlert.show(
+                            // ignore: use_build_context_synchronously
+                            context: context,
+                            type: QuickAlertType.error,
+                            text: 'Failed to send the message.',
+                            animType: QuickAlertAnimType.scale,
+                            confirmBtnTextStyle: const TextStyle(
+                              fontFamily: "MontserratAlternates",
+                              fontWeight: FontWeight.bold,
+                            ),
+                            //ukuran alert disesuaikan sehingga responsive di mobile maupun dekstop
+                            width: 400);
+                      }
+                    } else {
+                      QuickAlert.show(
+                          context: context,
+                          type: QuickAlertType.warning,
+                          text: 'Please fill in all fields before send!',
+                          animType: QuickAlertAnimType.scale,
+                          confirmBtnTextStyle: const TextStyle(
                             fontFamily: "MontserratAlternates",
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white),
-                        btnOkOnPress: () {},
-                      ).show();
+                            fontWeight: FontWeight.bold,
+                          ),
+                          //ukuran alert disesuaikan sehingga responsive di mobile maupun dekstop
+                          width: 400);
                     }
                   },
                   child: Container(
@@ -225,7 +262,7 @@ class DesktopBoxAndCertificate extends StatelessWidget {
                       ],
                     ),
                     child: Text(
-                      "send",
+                      "send message",
                       style: TextStyle(
                           color: Colors.white,
                           fontFamily: "MontserratAlternates",
@@ -330,19 +367,5 @@ class DesktopBoxAndCertificate extends StatelessWidget {
         ),
       )
     ]);
-  }
-
-  launchMailto(String email, String subject, String content) async {
-    try {
-      final mailtoLink = Mailto(
-        to: ['muhhilmisatrio@gmail.com'],
-        subject: subject,
-        body: content,
-      );
-      // ignore: deprecated_member_use
-      await launch('$mailtoLink');
-    } catch (e) {
-      debugPrint(e.toString());
-    }
   }
 }

@@ -17,7 +17,7 @@ class MobileCardExperience extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 600,
-      height: 1600,
+      height: 1200,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.only(
@@ -62,7 +62,7 @@ class MobileCardExperience extends StatelessWidget {
                     style: TextStyle(
                       color: Colors.white,
                       fontFamily: "MontserratAlternates",
-                      fontSize: 24,
+                      fontSize: 20,
                       fontWeight: FontWeight.w500,
                       shadows: [
                         Shadow(

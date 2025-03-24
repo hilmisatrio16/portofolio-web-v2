@@ -7,6 +7,7 @@ import '../../../../core/constants/constant_colors.dart';
 import '../../../../core/constants/iconify_assets.dart';
 import '../../../../core/constants/nav_items.dart';
 import '../../domain/entities/project.dart';
+import 'dart:js' as js;
 
 class CardProjects extends StatelessWidget {
   const CardProjects({
@@ -72,29 +73,19 @@ class CardProjects extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 26),
                   child: Row(
                     children: [
-                      Wrap(
-                        spacing: 8,
-                        children: [
+                      Wrap(spacing: 8, children: [
+                        for (int i = 0; i < project.techStack.length; i++)
                           Iconify(
-                            iconAndroid,
-                            color: Colors.white,
-                            size: 28,
-                          ),
-                          Iconify(
-                            iconKotin,
-                            color: Colors.white,
-                            size: 28,
-                          ),
-                          Iconify(
-                            iconAndroidStudio,
+                            project.techStack[i],
                             color: Colors.white,
                             size: 28,
                           )
-                        ],
-                      ),
+                      ]),
                       Spacer(),
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          js.context.callMethod('open', [project.sources]);
+                        },
                         child: Container(
                           padding:
                               EdgeInsets.symmetric(horizontal: 26, vertical: 4),

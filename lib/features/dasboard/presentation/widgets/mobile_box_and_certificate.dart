@@ -1,8 +1,12 @@
 import 'dart:ui';
 
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:emailjs/emailjs.dart' as emailjs;
 import 'package:flutter/material.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
+import 'package:quickalert/models/quickalert_animtype.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 
 import '../../../../core/constants/constant_colors.dart';
 import '../../../../core/constants/constant_values.dart';
@@ -20,6 +24,9 @@ class MobileBoxAndCertificate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController emailController = TextEditingController();
+    final TextEditingController nameController = TextEditingController();
+    final TextEditingController contentController = TextEditingController();
     return Column(children: [
       //certificate
       Container(
@@ -136,6 +143,9 @@ class MobileBoxAndCertificate extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 42),
                   child: TextField(
+                    controller: emailController,
+                    style: TextStyle(
+                        fontFamily: "MontserratAlternates", fontSize: 14),
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.white,
@@ -169,6 +179,9 @@ class MobileBoxAndCertificate extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 42),
                   child: TextField(
+                    controller: nameController,
+                    style: TextStyle(
+                        fontFamily: "MontserratAlternates", fontSize: 14),
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.white,
@@ -188,7 +201,7 @@ class MobileBoxAndCertificate extends StatelessWidget {
                             const BorderSide(color: Colors.white, width: 2.0),
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      hintText: 'type your subject...',
+                      hintText: 'type your name...',
                       hintStyle: const TextStyle(
                         color: Colors.grey,
                         fontFamily: "MontserratAlternates",
@@ -202,6 +215,9 @@ class MobileBoxAndCertificate extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 42),
                   child: TextField(
+                    controller: contentController,
+                    style: TextStyle(
+                        fontFamily: "MontserratAlternates", fontSize: 14),
                     maxLines: 7,
                     decoration: InputDecoration(
                       filled: true,
@@ -234,7 +250,70 @@ class MobileBoxAndCertificate extends StatelessWidget {
                   height: 80,
                 ),
                 InkWell(
-                  onTap: () {},
+                  onTap: () async {
+                    if (emailController.text.isNotEmpty &&
+                        nameController.text.isNotEmpty &&
+                        contentController.text.isNotEmpty) {
+                      Map<String, dynamic> templateParams = {
+                        'name': nameController.text,
+                        'message': contentController.text,
+                        'email': emailController.text
+                      };
+                      var response;
+                      try {
+                        response = await emailjs.send(
+                          'service_qkt7zrk',
+                          'template_bmhoq7m',
+                          templateParams,
+                          const emailjs.Options(
+                            publicKey: 'ozSFQqRcTJXLTL24j',
+                            privateKey: 'RIuaKPJ2Emesi82ikPbE7',
+                          ),
+                        );
+
+                        QuickAlert.show(
+                            // ignore: use_build_context_synchronously
+                            context: context,
+                            type: QuickAlertType.success,
+                            text: 'Success to send the message.',
+                            animType: QuickAlertAnimType.scale,
+                            confirmBtnTextStyle: const TextStyle(
+                              fontFamily: "MontserratAlternates",
+                              fontWeight: FontWeight.bold,
+                            ),
+                            //ukuran alert disesuaikan sehingga responsive di mobile maupun dekstop
+                            width: 400);
+                        emailController.text = '';
+                        nameController.text = '';
+                        contentController.text = '';
+                      } catch (error) {
+                        QuickAlert.show(
+                            // ignore: use_build_context_synchronously
+                            context: context,
+                            type: QuickAlertType.error,
+                            text: 'Failed to send the message.',
+                            animType: QuickAlertAnimType.scale,
+                            confirmBtnTextStyle: const TextStyle(
+                              fontFamily: "MontserratAlternates",
+                              fontWeight: FontWeight.bold,
+                            ),
+                            //ukuran alert disesuaikan sehingga responsive di mobile maupun dekstop
+                            width: 400);
+                      }
+                    } else {
+                      QuickAlert.show(
+                          context: context,
+                          type: QuickAlertType.warning,
+                          text: 'Please fill in all fields before send!',
+                          animType: QuickAlertAnimType.scale,
+                          confirmBtnTextStyle: const TextStyle(
+                            fontFamily: "MontserratAlternates",
+                            fontWeight: FontWeight.bold,
+                          ),
+                          //ukuran alert disesuaikan sehingga responsive di mobile maupun dekstop
+                          width: 400);
+                    }
+                  },
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 36, vertical: 8),
                     decoration: BoxDecoration(
@@ -252,7 +331,7 @@ class MobileBoxAndCertificate extends StatelessWidget {
                       ],
                     ),
                     child: Text(
-                      "send",
+                      "send message",
                       style: TextStyle(
                           color: Colors.white,
                           fontFamily: "MontserratAlternates",

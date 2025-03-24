@@ -163,6 +163,9 @@ class _HomePageState extends State<HomePage> {
             // Projects
             Project(
               navbarKeys: navbarKeys,
+              screenWidth: screenwidth,
+              controller: controller,
+              scrollToSection: scrollToSection,
             ),
 
             SizedBox(
@@ -221,6 +224,14 @@ class _HomePageState extends State<HomePage> {
                         ),
                         Iconify(
                           iconInstagramOutline,
+                          color: Colors.white,
+                          size: 42,
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Iconify(
+                          iconTikTok,
                           color: Colors.white,
                           size: 42,
                         )
